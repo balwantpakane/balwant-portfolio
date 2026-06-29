@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balwant Pakane — QA Automation & Manual Testing Engineer</title>
+<meta name="description" content="Portfolio of Balwant Pakane, QA Automation & Manual Testing Engineer specializing in Selenium WebDriver, Java, TestNG, and API Testing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  /* ============================= RESET & TOKENS ============================= */
+  :root{
+    --bg: #0a0a12;
+    --bg-soft: #0e0e1a;
+    --surface: #13131f;
+    --surface-2: #181826;
+    --border: rgba(255,255,255,0.08);
+    --border-bright: rgba(255,255,255,0.16);
+    --text: #e9e9f3;
+    --text-dim: #9595ab;
+    --text-faint: #6b6b80;
+
+    --indigo: #6366f1;
+    --indigo-soft: rgba(99,102,241,0.15);
+    --pink: #ec4899;
+    --pink-soft: rgba(236,72,153,0.15);
+    --cyan: #22d3ee;
+    --cyan-soft: rgba(34,211,238,0.15);
+    --amber: #f59e0b;
+    --amber-soft: rgba(245,158,11,0.15);
+
+    --grad-main: linear-gradient(120deg, var(--indigo), var(--pink) 50%, var(--cyan));
+    --grad-line: linear-gradient(90deg, var(--indigo), var(--pink), var(--cyan), var(--amber));
+
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    --radius: 16px;
+    --radius-sm: 10px;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  @media (max-width: 860px){
+    body{ cursor: auto; }
+  }
+
+  ::selection{ background: var(--pink-soft); color: var(--text); }
+
+  h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+
+  a{ color: inherit; text-decoration: none; }
+
+  img{ max-width:100%; display:block; }
+
+  /* ============================= SCROLLBAR ============================= */
+  ::-webkit-scrollbar{ width: 11px; }
+  ::-webkit-scrollbar-track{ background: var(--bg-soft); }
+  ::-webkit-scrollbar-thumb{
+    background: linear-gradient(180deg, var(--indigo), var(--pink), var(--cyan));
+    border-radius: 10px;
+    border: 2px solid var(--bg-soft);
+  }
+  ::-webkit-scrollbar-thumb:hover{ filter: brightness(1.2); }
+  html{ scrollbar-color: var(--indigo) var(--bg-soft); scrollbar-width: thin; }
+
+  /* ============================= UTILITY ============================= */
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  .section{ position: relative; padding: 130px 0; }
+  @media (max-width: 760px){ .section{ padding: 90px 0; } }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family: var(--font-body); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 18px; font-weight: 600;
+  }
+  .eyebrow::before{
+    content:""; width: 22px; height: 2px; background: var(--grad-line); border-radius: 2px; flex-shrink:0;
+  }
+
+  .section-title{
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+    margin-bottom: 16px;
+  }
+  .section-sub{
+    color: var(--text-dim);
+    font-size: 1.02rem;
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 56px;
+  }
+
+  .grad-text{
+    background: var(--grad-main);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity .8s var(--ease), transform .8s var(--ease);
+  }
+  .reveal.in-view{ opacity: 1; transform: translateY(0); }
+
+  .btn{
+    display: inline-flex; align-items:center; justify-content:center; gap: 8px;
+    font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
+    padding: 14px 28px; border-radius: 100px; cursor: pointer;
+    border: 1px solid transparent; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+    white-space: nowrap;
+  }
+  .btn-primary{
+    background: var(--grad-main); color: #07070d;
+    box-shadow: 0 8px 30px -8px rgba(99,102,241,0.55);
+  }
+  .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 14px 38px -8px rgba(236,72,153,0.55); }
+  .btn-ghost{
+    background: rgba(255,255,255,0.03); color: var(--text); border-color: var(--border-bright);
+  }
+  .btn-ghost:hover{ border-color: var(--cyan); color: var(--cyan); transform: translateY(-3px); }
+
+  /* ============================= LOADER ============================= */
+  #loader{
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #loader.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  .loader-initials{
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    background: var(--grad-main);
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip:text; color: transparent;
+    animation: loaderShift 1.6s ease-in-out infinite, loaderPulse 1.6s ease-in-out infinite;
+    letter-spacing: 0.02em;
+  }
+  @keyframes loaderShift{
+    0%{ background-position: 0% 50%; } 50%{ background-position: 100% 50%; } 100%{ background-position: 0% 50%; }
+  }
+  @keyframes loaderPulse{
+    0%,100%{ transform: scale(1); } 50%{ transform: scale(1.04); }
+  }
+  .loader-bar-track{
+    width: 220px; height: 4px; border-radius: 4px; background: rgba(255,255,255,0.08);
+    margin-top: 34px; overflow:hidden; position: relative;
+  }
+  .loader-bar-fill{
+    position:absolute; inset:0; width: 0%;
+    background: var(--grad-line); border-radius: 4px;
+    animation: loaderFill 1.9s var(--ease) forwards;
+  }
+  @keyframes loaderFill{ to{ width: 100%; } }
+  .loader-tag{
+    margin-top: 18px; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint);
+  }
+
+  /* ============================= BG LAYERS ============================= */
+  #particle-canvas{
+    position: fixed; inset:0; z-index:0; pointer-events:none;
+  }
+  .noise-overlay{
+    position: fixed; inset:0; z-index:1; pointer-events:none;
+    opacity: 0.05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .grain-vignette{
+    position: fixed; inset:0; z-index:1; pointer-events:none;
+    background: radial-gradient(circle at 50% 30%, transparent 0%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* ============================= CURSOR ============================= */
+  #cursor-dot, #cursor-ring{
+    position: fixed; top:0; left:0; pointer-events:none; z-index: 9998;
+    border-radius: 50%; transform: translate(-50%,-50%);
+  }
+  #cursor-dot{
+    width: 8px; height: 8px; background: var(--cyan);
+    box-shadow: 0 0 12px 2px var(--cyan), 0 0 24px 6px rgba(34,211,238,0.4);
+  }
+  #cursor-ring{
+    width: 38px; height: 38px; border: 1.5px solid rgba(236,72,153,0.6);
+    transition: width .25s var(--ease), height .25s var(--ease), border-color .25s, background .25s;
+  }
+  #cursor-ring.active{
+    width: 60px; height: 60px; background: rgba(236,72,153,0.08); border-color: var(--pink);
+  }
+  @media (max-width: 860px){
+    #cursor-dot, #cursor-ring{ display:none; }
+  }
+
+  /* ============================= NAVBAR ============================= */
+  #navbar{
+    position: fixed; top: 0; left:0; right:0; z-index: 500;
+    display:flex; justify-content:center;
+    padding: 18px 24px;
+    transition: padding .4s var(--ease);
+  }
+  #navbar.scrolled{ padding: 10px 24px; }
+  .nav-inner{
+    width: 100%; max-width: 1100px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 12px 22px;
+    border-radius: 100px;
+    background: rgba(18,18,30,0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--border);
+    transition: background .4s, box-shadow .4s;
+  }
+  #navbar.scrolled .nav-inner{
+    box-shadow: 0 10px 40px -12px rgba(0,0,0,0.6);
+    background: rgba(14,14,22,0.75);
+  }
+  .nav-logo{
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+  }
+  .nav-logo span{ color: var(--cyan); }
+  .nav-links{
+    display:flex; gap: 30px; list-style:none; align-items:center;
+  }
+  .nav-links a{
+    position: relative; font-size: 0.92rem; color: var(--text-dim); font-weight: 500;
+    padding-bottom: 4px; transition: color .3s;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height: 2px;
+    background: var(--grad-line); border-radius: 2px;
+    transition: width .35s var(--ease);
+  }
+  .nav-links a:hover, .nav-links a.active{ color: var(--text); }
+  .nav-links a:hover::after, .nav-links a.active::after{ width: 100%; }
+  .nav-cta{
+    font-size: 0.85rem; padding: 9px 20px;
+  }
+  #nav-toggle{
+    display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding: 6px;
+  }
+  #nav-toggle span{ width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .3s, opacity .3s; }
+  @media (max-width: 760px){
+    .nav-links{
+      position: fixed; top: 78px; left: 16px; right:16px;
+      flex-direction: column; align-items: flex-start; gap: 18px;
+      background: rgba(14,14,22,0.95); backdrop-filter: blur(18px);
+      border: 1px solid var(--border); border-radius: 18px;
+      padding: 26px 24px;
+      transform: translateY(-12px) scale(0.98); opacity:0; visibility:hidden;
+      transition: all .35s var(--ease);
+    }
+    .nav-links.open{ transform: translateY(0) scale(1); opacity:1; visibility:visible; }
+    .nav-cta{ display:none; }
+    #nav-toggle{ display:flex; }
+    #nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    #nav-toggle.open span:nth-child(2){ opacity: 0; }
+    #nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  /* ============================= HERO ============================= */
+  #hero{
+    min-height: 100vh;
+    display:flex; align-items:center;
+    padding-top: 130px; padding-bottom: 80px;
+    position: relative;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items:center;
+  }
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; gap: 64px; }
+  }
+  .hero-name{
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    line-height: 1.04;
+    margin-bottom: 22px;
+  }
+  .shimmer{
+    background: linear-gradient(110deg, var(--indigo) 20%, var(--cyan) 40%, var(--pink) 60%, var(--indigo) 80%);
+    background-size: 250% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmerMove 5s linear infinite;
+  }
+  @keyframes shimmerMove{
+    to{ background-position: -250% 0; }
+  }
+  .hero-role{
+    font-size: 1.18rem; color: var(--text-dim); font-weight: 500; margin-bottom: 14px;
+  }
+  .hero-role .pipe{ color: var(--text-faint); margin: 0 8px; }
+  .hero-desc{
+    color: var(--text-dim); max-width: 480px; line-height: 1.7; margin-bottom: 36px; font-size: 1rem;
+  }
+  .hero-ctas{ display:flex; gap: 16px; flex-wrap: wrap; margin-bottom: 44px; }
+  .hero-meta{
+    display:flex; gap: 26px; flex-wrap: wrap; color: var(--text-faint); font-size: 0.85rem;
+  }
+  .hero-meta span{ display:flex; align-items:center; gap:8px; }
+  .dot-live{
+    width:7px; height:7px; border-radius:50%; background: #34d399;
+    box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot{
+    0%{ box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+    70%{ box-shadow: 0 0 0 7px rgba(52,211,153,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+
+  /* 3D floating card */
+  .card-stage{
+    perspective: 1200px;
+    display:flex; justify-content:center;
+  }
+  .float-card{
+    width: 100%; max-width: 360px;
+    background: linear-gradient(160deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border-bright);
+    border-radius: 22px;
+    padding: 32px 28px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(-8deg) rotateX(6deg);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.02) inset;
+    transition: transform .15s linear;
+    animation: floatCard 6s ease-in-out infinite;
+  }
+  @keyframes floatCard{
+    0%,100%{ transform: rotateY(-8deg) rotateX(6deg) translateY(0); }
+    50%{ transform: rotateY(-4deg) rotateX(3deg) translateY(-14px); }
+  }
+  .float-card::before{
+    content:""; position:absolute; inset:-1px; border-radius: 22px; padding: 1px;
+    background: var(--grad-line); opacity: 0.35;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none;
+  }
+  .float-card-head{
+    display:flex; align-items:center; gap: 12px; margin-bottom: 26px;
+  }
+  .float-avatar{
+    width: 44px; height:44px; border-radius: 50%;
+    background: var(--grad-main); display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:700; color:#07070d; font-size: 1rem;
+    flex-shrink:0;
+  }
+  .float-card-head h4{ font-size: 0.95rem; font-weight:700; }
+  .float-card-head p{ font-size: 0.78rem; color: var(--text-faint); }
+  .stat-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-box{
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 14px;
+    transform: translateZ(20px);
+  }
+  .stat-num{
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+    background: var(--grad-main); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-label{ font-size: 0.72rem; color: var(--text-faint); margin-top: 4px; letter-spacing: 0.02em; }
+  .float-card-foot{
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    font-size: 0.78rem; color: var(--text-faint);
+  }
+  .float-card-foot .badge-live{
+    color: #34d399; display:flex; align-items:center; gap:6px; font-weight:600;
+  }
+
+  .scroll-cue{
+    position:absolute; bottom: 36px; left:50%; transform: translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    color: var(--text-faint); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .scroll-cue .line{
+    width:1px; height: 34px; background: linear-gradient(180deg, var(--text-faint), transparent);
+    overflow:hidden; position:relative;
+  }
+  .scroll-cue .line::after{
+    content:""; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: scrollLine 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollLine{ to{ top: 100%; } }
+
+  /* ============================= SKILLS ============================= */
+  .skills-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  }
+  @media (max-width: 860px){ .skills-grid{ grid-template-columns: 1fr; gap: 44px; } }
+  .skill-bar-group{ margin-bottom: 26px; }
+  .skill-bar-top{ display:flex; justify-content:space-between; margin-bottom: 9px; font-size: 0.9rem; }
+  .skill-bar-top span:first-child{ font-weight: 600; }
+  .skill-bar-top span:last-child{ color: var(--text-faint); font-family: var(--font-display); }
+  .skill-bar-track{
+    height: 8px; border-radius: 6px; background: rgba(255,255,255,0.06); overflow:hidden;
+    position: relative;
+  }
+  .skill-bar-fill{
+    height:100%; width:0%; border-radius:6px;
+    background: var(--grad-line);
+    transition: width 1.4s var(--ease);
+    position: relative;
+  }
+  .skill-bar-fill::after{
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    width: 40%; animation: barShine 2.2s ease-in-out infinite;
+  }
+  @keyframes barShine{
+    0%{ transform: translateX(-100%); } 100%{ transform: translateX(280%); }
+  }
+
+  .chip-cloud-title{
+    font-family: var(--font-display); font-size: 1rem; margin: 30px 0 16px; color: var(--text-dim);
+  }
+  .chip-cloud{ display:flex; flex-wrap:wrap; gap: 10px; }
+  .chip{
+    font-size: 0.82rem; padding: 8px 16px; border-radius: 100px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text-dim); font-weight: 500;
+    transition: transform .3s var(--ease), border-color .3s, color .3s, background .3s;
+  }
+  .chip:hover{
+    transform: translateY(-4px);
+    border-color: var(--cyan); color: var(--cyan);
+    background: var(--cyan-soft);
+  }
+
+  /* ============================= EXPERIENCE TIMELINE ============================= */
+  .timeline{
+    position: relative; max-width: 760px; margin: 0 auto;
+    padding-left: 36px;
+  }
+  .timeline::before{
+    content:""; position:absolute; left: 7px; top: 6px; bottom: 6px; width: 2px;
+    background: linear-gradient(180deg, var(--indigo), var(--pink), var(--cyan));
+    border-radius: 2px;
+  }
+  .tl-item{ position: relative; padding-bottom: 50px; }
+  .tl-item:last-child{ padding-bottom: 0; }
+  .tl-dot{
+    position:absolute; left: -36px; top: 4px;
+    width: 16px; height:16px; border-radius:50%;
+    background: var(--bg); border: 2px solid var(--cyan);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 18px 2px rgba(34,211,238,0.5);
+  }
+  .tl-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    transition: border-color .4s, box-shadow .4s, transform .4s var(--ease);
+  }
+  .tl-card:hover{
+    border-color: rgba(99,102,241,0.5);
+    box-shadow: 0 20px 50px -20px rgba(99,102,241,0.4), 0 0 30px -10px rgba(236,72,153,0.25);
+    transform: translateY(-4px);
+  }
+  .tl-date{
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amber); font-weight: 700; margin-bottom: 8px;
+  }
+  .tl-role{ font-size: 1.2rem; margin-bottom: 4px; }
+  .tl-org{ color: var(--text-dim); font-size: 0.92rem; margin-bottom: 18px; font-weight: 500; }
+  .tl-list{ list-style:none; display:flex; flex-direction:column; gap: 10px; }
+  .tl-list li{
+    position: relative; padding-left: 20px; font-size: 0.92rem; color: var(--text-dim); line-height: 1.6;
+  }
+  .tl-list li::before{
+    content:""; position:absolute; left:0; top: 9px; width:7px; height:7px; border-radius:2px;
+    background: var(--grad-main); transform: rotate(45deg);
+  }
+  .tl-cert{
+    display:inline-flex; align-items:center; gap: 10px; margin-top: 20px;
+    background: var(--amber-soft); border: 1px solid rgba(245,158,11,0.35);
+    color: var(--amber); padding: 9px 18px; border-radius: 100px; font-size: 0.82rem; font-weight: 600;
+  }
+
+  /* ============================= PROJECTS ============================= */
+  .proj-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap: 26px;
+  }
+  @media (max-width: 860px){ .proj-grid{ grid-template-columns: 1fr; } }
+  .proj-card{
+    position: relative; overflow:hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px;
+    transition: transform .45s var(--ease), border-color .45s, box-shadow .45s;
+  }
+  .proj-card::before{
+    content:""; position:absolute; top:0; left:-120%; width: 90%; height:100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.07), transparent);
+    transform: skewX(-18deg);
+    transition: left .8s var(--ease);
+    pointer-events:none;
+  }
+  .proj-card:hover::before{ left: 130%; }
+  .proj-card:hover{
+    transform: translateY(-6px);
+    border-color: var(--border-bright);
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.6);
+  }
+  .proj-emoji{
+    font-size: 2.1rem; margin-bottom: 18px;
+    width: 56px; height:56px; border-radius: 16px;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  }
+  .proj-card h3{ font-size: 1.15rem; margin-bottom: 10px; }
+  .proj-card p{ color: var(--text-dim); font-size: 0.9rem; line-height: 1.65; margin-bottom: 18px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 18px; }
+  .tag{
+    font-size: 0.72rem; padding: 5px 12px; border-radius: 100px; font-weight: 600;
+    border: 1px solid var(--border);
+  }
+  .tag-indigo{ color: var(--indigo); background: var(--indigo-soft); border-color: rgba(99,102,241,0.3); }
+  .tag-pink{ color: var(--pink); background: var(--pink-soft); border-color: rgba(236,72,153,0.3); }
+  .tag-cyan{ color: var(--cyan); background: var(--cyan-soft); border-color: rgba(34,211,238,0.3); }
+  .tag-amber{ color: var(--amber); background: var(--amber-soft); border-color: rgba(245,158,11,0.3); }
+  .proj-points{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .proj-points li{ font-size: 0.85rem; color: var(--text-dim); padding-left: 16px; position:relative; line-height:1.55; }
+  .proj-points li::before{ content:"›"; position:absolute; left:0; color: var(--cyan); font-weight:700; }
+  .proj-link{
+    margin-top: 20px; display:inline-flex; align-items:center; gap:6px;
+    font-size: 0.85rem; font-weight: 600; color: var(--text);
+    border-bottom: 1px solid var(--border-bright); padding-bottom: 2px;
+    transition: color .3s, border-color .3s, gap .3s;
+  }
+  .proj-link:hover{ color: var(--cyan); border-color: var(--cyan); gap: 10px; }
+
+  /* ============================= WORK SAMPLE ============================= */
+  .sample-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+  }
+  @media (max-width: 900px){ .sample-grid{ grid-template-columns: 1fr; } }
+  .sample-card{
+    background: linear-gradient(160deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display:flex; flex-direction:column;
+    transition: transform .4s var(--ease), border-color .4s, box-shadow .4s;
+  }
+  .sample-card:hover{
+    transform: translateY(-6px);
+    border-color: rgba(34,211,238,0.4);
+    box-shadow: 0 24px 60px -24px rgba(34,211,238,0.3);
+  }
+  .sample-icon{
+    width: 50px; height:50px; border-radius: 14px;
+    display:flex; align-items:center; justify-content:center; font-size: 1.4rem;
+    margin-bottom: 18px;
+  }
+  .sample-icon.login{ background: var(--indigo-soft); }
+  .sample-icon.forgot{ background: var(--pink-soft); }
+  .sample-icon.zip{ background: var(--amber-soft); }
+  .sample-kicker{
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+    color: var(--text-faint); margin-bottom: 8px;
+  }
+  .sample-card h3{ font-size: 1.08rem; margin-bottom: 10px; }
+  .sample-card p{ color: var(--text-dim); font-size: 0.87rem; line-height: 1.6; margin-bottom: 22px; flex-grow:1; }
+  .sample-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-size: 0.85rem; font-weight:600; padding: 11px 0; border-radius: 100px;
+    border: 1px solid var(--border-bright); color: var(--text);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .sample-btn:hover{ background: rgba(255,255,255,0.06); border-color: var(--cyan); color: var(--cyan); }
+  .sample-note{
+    margin-top: 36px; text-align:center; color: var(--text-faint); font-size: 0.85rem;
+    max-width: 620px; margin-left:auto; margin-right:auto; line-height: 1.7;
+  }
+  .sample-note strong{ color: var(--text-dim); }
+
+  /* ============================= EDUCATION / LANGUAGES ============================= */
+  .edu-lang-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap: 26px;
+  }
+  @media (max-width: 860px){ .edu-lang-grid{ grid-template-columns: 1fr; } }
+  .clean-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 32px;
+  }
+  .edu-row{ display:flex; gap: 20px; align-items:flex-start; }
+  .edu-icon{
+    width: 52px; height:52px; border-radius: 14px; flex-shrink:0;
+    background: var(--indigo-soft); display:flex; align-items:center; justify-content:center; font-size: 1.4rem;
+  }
+  .edu-row h3{ font-size: 1.1rem; margin-bottom: 6px; }
+  .edu-row p{ color: var(--text-dim); font-size: 0.9rem; }
+  .edu-row .edu-year{ color: var(--text-faint); font-size: 0.82rem; margin-top: 6px; }
+
+  .lang-list{ display:flex; flex-direction:column; gap: 18px; }
+  .lang-item{ display:flex; justify-content:space-between; align-items:center; }
+  .lang-name{ font-weight: 600; font-size: 0.96rem; }
+  .lang-badge{
+    font-size: 0.74rem; font-weight: 700; padding: 5px 14px; border-radius: 100px;
+  }
+  .lang-badge.native{ background: var(--cyan-soft); color: var(--cyan); }
+  .lang-badge.pro{ background: var(--amber-soft); color: var(--amber); }
+
+  /* ============================= CONTACT ============================= */
+  .contact-grid{
+    display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 18px; margin-bottom: 56px;
+  }
+  @media (max-width: 860px){ .contact-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px){ .contact-grid{ grid-template-columns: 1fr; } }
+  .contact-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px 22px; text-align:center;
+    transition: transform .35s var(--ease), border-color .35s;
+  }
+  .contact-card:hover{ transform: translateY(-5px); border-color: var(--border-bright); }
+  .contact-card .ic{ font-size: 1.6rem; margin-bottom: 14px; }
+  .contact-card .label{ font-size: 0.74rem; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom: 6px; }
+  .contact-card .val{ font-size: 0.92rem; font-weight: 600; word-break: break-word; }
+
+  .contact-cta{
+    display:flex; flex-direction: column; align-items:center; text-align:center; gap: 26px;
+  }
+  .ripple-avatar{
+    position: relative; width: 110px; height:110px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--grad-main);
+    font-family: var(--font-display); font-weight: 800; font-size: 2.2rem; color: #07070d;
+    cursor: pointer;
+  }
+  .ripple-avatar .ring{
+    position:absolute; inset:0; border-radius:50%; border: 2px solid rgba(99,102,241,0.5);
+    animation: rippleAnim 2.6s ease-out infinite;
+  }
+  .ripple-avatar .ring:nth-child(2){ animation-delay: .9s; border-color: rgba(236,72,153,0.5); }
+  .ripple-avatar .ring:nth-child(3){ animation-delay: 1.8s; border-color: rgba(34,211,238,0.5); }
+  @keyframes rippleAnim{
+    0%{ transform: scale(1); opacity: 0.8; }
+    100%{ transform: scale(1.9); opacity: 0; }
+  }
+  .contact-ctas{ display:flex; gap: 16px; flex-wrap:wrap; justify-content:center; }
+
+  /* ============================= FOOTER ============================= */
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 36px 0; text-align:center;
+    color: var(--text-faint); font-size: 0.85rem; position: relative; z-index: 2;
+  }
+  footer span{ color: var(--text-dim); }
+
+  /* relative z-index so content sits above bg layers */
+  #navbar, #hero, .section, footer{ position: relative; z-index: 2; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================= LOADER ============================= -->
+<div id="loader">
+  <div class="loader-initials">BP</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+  <div class="loader-tag">Loading Portfolio</div>
+</div>
+
+<!-- ============================= BG LAYERS ============================= -->
+<canvas id="particle-canvas"></canvas>
+<div class="noise-overlay"></div>
+<div class="grain-vignette"></div>
+
+<!-- ============================= CURSOR ============================= -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ============================= NAVBAR ============================= -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">BP<span>.</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#work-sample" class="nav-link">Work Sample</a></li>
+      <li><a href="#education" class="nav-link">Education</a></li>
+      <li><a href="#contact" class="nav-link nav-cta btn btn-primary">Contact</a></li>
+    </ul>
+    <button id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ============================= HERO ============================= -->
+<header id="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">QA Automation &amp; Manual Testing</div>
+      <h1 class="hero-name">Hi, I'm <span class="shimmer">Balwant Pakane</span></h1>
+      <p class="hero-role">Selenium WebDriver <span class="pipe">|</span> Java &amp; TestNG <span class="pipe">|</span> API Testing</p>
+      <p class="hero-desc">B.Sc Computer Science graduate trained in manual and automation testing — building reliable Selenium frameworks, validating REST APIs, and chasing down defects across 4 real-world projects.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+      <div class="hero-meta">
+        <span><span class="dot-live"></span> Open to QA roles</span>
+        <span>📍 Pune, Maharashtra</span>
+        <span>🎓 B.Sc Computer Science, 2020</span>
+      </div>
+    </div>
+
+    <div class="card-stage">
+      <div class="float-card" id="float-card">
+        <div class="float-card-head">
+          <div class="float-avatar">BP</div>
+          <div>
+            <h4>Balwant Pakane</h4>
+            <p>QA Automation Trainee · SSquare IT</p>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-num">25+</div><div class="stat-label">Automated Test Scenarios</div></div>
+          <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">Live Projects</div></div>
+          <div class="stat-box"><div class="stat-num">15+</div><div class="stat-label">Manual Test Cases</div></div>
+          <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">JS API Assertions</div></div>
+        </div>
+        <div class="float-card-foot">
+          <span class="badge-live">● Available now</span>
+          <span>4+ months training</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
+</header>
+
+<!-- ============================= SKILLS ============================= -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="eyebrow reveal">Capabilities</div>
+    <h2 class="section-title reveal">Skills &amp; <span class="grad-text">Tooling</span></h2>
+    <p class="section-sub reveal">Hands-on with the core stack of a modern QA engineer — from writing manual test cases to building automation frameworks and validating APIs.</p>
+
+    <div class="skills-grid">
+      <div class="reveal">
+        <div class="skill-bar-group" data-level="92">
+          <div class="skill-bar-top"><span>Manual Testing</span><span>92%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+        <div class="skill-bar-group" data-level="85">
+          <div class="skill-bar-top"><span>Selenium WebDriver</span><span>85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+        <div class="skill-bar-group" data-level="80">
+          <div class="skill-bar-top"><span>Core Java</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+        <div class="skill-bar-group" data-level="82">
+          <div class="skill-bar-top"><span>TestNG</span><span>82%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+        <div class="skill-bar-group" data-level="88">
+          <div class="skill-bar-top"><span>API Testing (Postman)</span><span>88%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+        <div class="skill-bar-group" data-level="75">
+          <div class="skill-bar-top"><span>SQL</span><span>75%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="chip-cloud-title">Testing Types</div>
+        <div class="chip-cloud">
+          <span class="chip">Manual Testing</span>
+          <span class="chip">Regression Testing</span>
+          <span class="chip">Smoke Testing</span>
+          <span class="chip">Sanity Testing</span>
+          <span class="chip">Functional Testing</span>
+          <span class="chip">Cross-Browser Testing</span>
+          <span class="chip">Data-Driven Testing</span>
+        </div>
+
+        <div class="chip-cloud-title">Automation &amp; Tools</div>
+        <div class="chip-cloud">
+          <span class="chip">Selenium WebDriver</span>
+          <span class="chip">TestNG</span>
+          <span class="chip">Maven</span>
+          <span class="chip">Postman</span>
+          <span class="chip">Collection Runner</span>
+          <span class="chip">Jenkins (Basic)</span>
+          <span class="chip">Eclipse IDE</span>
+          <span class="chip">VS Code</span>
+        </div>
+
+        <div class="chip-cloud-title">Languages &amp; Tracking</div>
+        <div class="chip-cloud">
+          <span class="chip">Java</span>
+          <span class="chip">SQL</span>
+          <span class="chip">JavaScript (Basic)</span>
+          <span class="chip">Python (Basic)</span>
+          <span class="chip">JIRA</span>
+          <span class="chip">Azure DevOps (Basic)</span>
+          <span class="chip">Git / GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= EXPERIENCE ============================= -->
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="eyebrow reveal">Training &amp; Internship</div>
+    <h2 class="section-title reveal">My <span class="grad-text">Experience</span></h2>
+    <p class="section-sub reveal">Four months of intensive, project-driven QA training — covering manual and automation testing end to end.</p>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-date">Nov 2025 — Mar 2026</div>
+          <h3 class="tl-role">QA Automation Trainee</h3>
+          <p class="tl-org">SSquare IT, Pune</p>
+          <ul class="tl-list">
+            <li>Completed comprehensive training in Manual Testing, Automation Testing (Selenium WebDriver + Java + TestNG), and API Testing (Postman + REST API)</li>
+            <li>Gained practical exposure to Agile Scrum methodology, SDLC, and STLC</li>
+            <li>Developed and executed 25+ automated test scripts for web application testing</li>
+            <li>Performed API testing with CRUD operations, status code validation, and JSON schema verification</li>
+            <li>Used JIRA for bug tracking and Git/GitHub for version control and collaboration</li>
+          </ul>
+          <div class="tl-cert">🏅 QA Manual &amp; Automation Testing Training Certificate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= PROJECTS ============================= -->
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="eyebrow reveal">Live Project Exposure</div>
+    <h2 class="section-title reveal">Featured <span class="grad-text">Projects</span></h2>
+    <p class="section-sub reveal">Four real-world projects spanning web automation, e-commerce, REST APIs, and manual functional testing.</p>
+
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-emoji">🧪</div>
+        <h3>Automation Testing — OrangeHRM</h3>
+        <div class="tag-row">
+          <span class="tag tag-indigo">Java</span>
+          <span class="tag tag-pink">Selenium</span>
+          <span class="tag tag-cyan">TestNG</span>
+          <span class="tag tag-amber">Maven</span>
+        </div>
+        <ul class="proj-points">
+          <li>Built Selenium WebDriver scripts for end-to-end web app testing</li>
+          <li>Implemented Page Object Model with TestNG and Maven Standard Layout</li>
+          <li>Automated login positive/negative scenarios — valid, invalid, boundary cases</li>
+          <li>Used XPath, CSS Selectors, and Explicit/Implicit Waits for synchronization</li>
+          <li>Generated HTML test execution reports for stakeholder visibility</li>
+        </ul>
+        <a href="https://github.com/balwantpakane" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-emoji">🛒</div>
+        <h3>E-Commerce Automation — Flipkart</h3>
+        <div class="tag-row">
+          <span class="tag tag-indigo">Selenium</span>
+          <span class="tag tag-pink">Java</span>
+          <span class="tag tag-cyan">TestNG</span>
+          <span class="tag tag-amber">SafariDriver</span>
+        </div>
+        <ul class="proj-points">
+          <li>Automated product search, selection, and window-handling workflows</li>
+          <li>Validated product name, price, and Add to Cart / Buy Now flows</li>
+          <li>Used TestNG assertions, XPath locators, and exception handling</li>
+          <li>Configured cross-browser execution with SafariDriver</li>
+        </ul>
+        <a href="https://github.com/balwantpakane" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-emoji">🔌</div>
+        <h3>REST API Test Automation — Postman</h3>
+        <div class="tag-row">
+          <span class="tag tag-indigo">Postman</span>
+          <span class="tag tag-pink">REST API</span>
+          <span class="tag tag-cyan">JavaScript</span>
+          <span class="tag tag-amber">JSON</span>
+        </div>
+        <ul class="proj-points">
+          <li>Automated CRUD operations for Reqres.in public REST API via Collection Runner</li>
+          <li>Implemented API Key auth via x-api-key header to resolve 401 errors</li>
+          <li>Wrote 7 JS assertions validating status codes &amp; JSON response schema</li>
+          <li>Debugged case-sensitive payload issues and HTTP method mismatches</li>
+        </ul>
+        <a href="https://github.com/balwantpakane" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-emoji">📋</div>
+        <h3>Manual Testing — OrangeHRM</h3>
+        <div class="tag-row">
+          <span class="tag tag-indigo">Manual</span>
+          <span class="tag tag-pink">JIRA</span>
+          <span class="tag tag-cyan">Agile</span>
+          <span class="tag tag-amber">Git</span>
+        </div>
+        <ul class="proj-points">
+          <li>Performed functional testing on OrangeHRM open-source HRM demo app</li>
+          <li>Designed and executed 15+ test cases for Login and Logout workflows</li>
+          <li>Documented Steps to Execute, Test Data, and Expected Results</li>
+          <li>Logged 5+ defects on validation messages following standard defect lifecycle</li>
+        </ul>
+        <a href="https://github.com/balwantpakane" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= WORK SAMPLE ============================= -->
+<section class="section" id="work-sample">
+  <div class="wrap">
+    <div class="eyebrow reveal">Assignment Walkthrough</div>
+    <h2 class="section-title reveal">Work <span class="grad-text">Sample</span></h2>
+    <p class="section-sub reveal">A hands-on testing assignment covering Login, Logout, and Forgot Password functionality — recorded end-to-end with the full test artifact.</p>
+
+    <div class="sample-grid">
+      <div class="sample-card reveal">
+        <div class="sample-icon login">🔐</div>
+        <div class="sample-kicker">Section 1 · Screen Recording</div>
+        <h3>Login Functionality</h3>
+        <p>End-to-end walkthrough of test execution covering valid, invalid, and boundary login scenarios.</p>
+        <a href="https://drive.google.com/file/d/1dnWaNl_Q-9x8tmzNq_jKlAy6VIEG7T4y/view?usp=sharing" target="_blank" rel="noopener" class="sample-btn">▶ Watch Recording</a>
+      </div>
+
+      <div class="sample-card reveal">
+        <div class="sample-icon forgot">🔁</div>
+        <div class="sample-kicker">Section 2 · Screen Recording</div>
+        <h3>Forgot Password Flow</h3>
+        <p>Step-by-step test execution of the forgot password journey, including edge cases and validations.</p>
+        <a href="https://drive.google.com/file/d/18W6pq_0S8Peab_5qxG5wvhzeYv2_-QL3/view?usp=sharing" target="_blank" rel="noopener" class="sample-btn">▶ Watch Recording</a>
+      </div>
+
+      <div class="sample-card reveal">
+        <div class="sample-icon zip">📦</div>
+        <div class="sample-kicker">Deliverable</div>
+        <h3>Assignment ZIP</h3>
+        <p>Complete assignment package — test cases, scripts, and supporting docs for Login, Logout &amp; Forgot Password.</p>
+        <a href="https://drive.google.com/file/d/1CapQKdQNPvGLL-qY9sXs2UHKK5MnJQSI/view?usp=sharing" target="_blank" rel="noopener" class="sample-btn">⬇ Download ZIP</a>
+      </div>
+    </div>
+
+    <p class="sample-note">Worked on <strong>Login</strong>, <strong>Logout</strong>, and <strong>Forgot Password</strong> functionality — covering manual test case design, execution, and defect logging for each flow.</p>
+  </div>
+</section>
+
+<!-- ============================= EDUCATION & LANGUAGES ============================= -->
+<section class="section" id="education">
+  <div class="wrap">
+    <div class="eyebrow reveal">Background</div>
+    <h2 class="section-title reveal">Education &amp; <span class="grad-text">Languages</span></h2>
+    <p class="section-sub reveal">Academic foundation and the languages I work comfortably in.</p>
+
+    <div class="edu-lang-grid">
+      <div class="clean-card reveal">
+        <div class="edu-row">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h3>Bachelor of Science — Computer Science</h3>
+            <p>Pune University, Pune</p>
+            <div class="edu-year">Graduated 2020</div>
+          </div>
+        </div>
+        <div style="height:1px; background:var(--border); margin:26px 0;"></div>
+        <div class="edu-row">
+          <div class="edu-icon" style="background: var(--amber-soft);">🏅</div>
+          <div>
+            <h3>QA Manual &amp; Automation Testing Training Certificate</h3>
+            <p>SSquare IT, Pune</p>
+            <div class="edu-year">Mar 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clean-card reveal">
+        <div class="lang-list">
+          <div class="lang-item">
+            <span class="lang-name">English</span>
+            <span class="lang-badge pro">Professional</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Hindi</span>
+            <span class="lang-badge native">Native</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Marathi</span>
+            <span class="lang-badge native">Native</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= CONTACT ============================= -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal">Let's Connect</div>
+    <h2 class="section-title reveal">Get in <span class="grad-text">Touch</span></h2>
+    <p class="section-sub reveal">Looking for a QA Automation &amp; Manual Testing role — happy to walk through any of the projects above in detail.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="ic">📞</div>
+        <div class="label">Phone</div>
+        <div class="val">+91-8149494539</div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="ic">✉️</div>
+        <div class="label">Email</div>
+        <div class="val">qa.balwant@gmail.com</div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="ic">💼</div>
+        <div class="label">LinkedIn</div>
+        <div class="val">/in/balwantpakane</div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="ic">🐙</div>
+        <div class="label">GitHub</div>
+        <div class="val">/balwantpakane</div>
+      </div>
+    </div>
+
+    <div class="contact-cta reveal">
+      <div class="ripple-avatar">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        BP
+      </div>
+      <div class="contact-ctas">
+        <a href="mailto:qa.balwant@gmail.com" class="btn btn-primary">✉ Email Me</a>
+        <a href="https://linkedin.com/in/balwantpakane" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn Profile</a>
+        <a href="https://github.com/balwantpakane" target="_blank" rel="noopener" class="btn btn-ghost">GitHub Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> <span>Balwant Pakane</span> — QA Automation &amp; Manual Testing Engineer · Pune, India</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================= LOADER ============================= */
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      var loader = document.getElementById('loader');
+      loader.classList.add('hide');
+    }, 1300);
+  });
+  // Safety fallback in case 'load' is delayed
+  setTimeout(function(){
+    document.getElementById('loader').classList.add('hide');
+  }, 4000);
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============================= PARTICLE CANVAS ============================= */
+  var canvas = document.getElementById('particle-canvas');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var mouse = { x: null, y: null, radius: 140 };
+  var W, H;
+
+  function resizeCanvas(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  var colors = ['#6366f1', '#ec4899', '#22d3ee', '#f59e0b'];
+
+  function Particle(){
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.35;
+    this.vy = (Math.random() - 0.5) * 0.35;
+    this.r = Math.random() * 1.6 + 0.6;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+  }
+  Particle.prototype.update = function(){
+    this.x += this.vx;
+    this.y += this.vy;
+    if(this.x < 0 || this.x > W) this.vx *= -1;
+    if(this.y < 0 || this.y > H) this.vy *= -1;
+
+    if(mouse.x !== null){
+      var dx = this.x - mouse.x;
+      var dy = this.y - mouse.y;
+      var dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < mouse.radius){
+        var force = (mouse.radius - dist) / mouse.radius;
+        this.x += (dx / dist) * force * 1.2;
+        this.y += (dy / dist) * force * 1.2;
+      }
+    }
+  };
+  Particle.prototype.draw = function(){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = 0.7;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  };
+
+  function initParticles(){
+    particles = [];
+    var count = Math.min(110, Math.floor((W * H) / 14000));
+    for(var i=0;i<count;i++) particles.push(new Particle());
+  }
+  initParticles();
+  window.addEventListener('resize', initParticles);
+
+  function connectParticles(){
+    var maxDist = 120;
+    for(var i=0;i<particles.length;i++){
+      for(var j=i+1;j<particles.length;j++){
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < maxDist){
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(150,150,255,' + (1 - dist/maxDist) * 0.15 + ')';
+          ctx.lineWidth = 1;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animateParticles(){
+    ctx.clearRect(0, 0, W, H);
+    for(var i=0;i<particles.length;i++){
+      particles[i].update();
+      particles[i].draw();
+    }
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+  }
+
+  if(!prefersReducedMotion){
+    animateParticles();
+  } else {
+    // static single draw
+    for(var i=0;i<particles.length;i++) particles[i].draw();
+  }
+
+  window.addEventListener('mousemove', function(e){
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', function(){
+    mouse.x = null; mouse.y = null;
+  });
+  window.addEventListener('touchmove', function(e){
+    if(e.touches && e.touches[0]){
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  /* ============================= CUSTOM CURSOR ============================= */
+  var cursorDot = document.getElementById('cursor-dot');
+  var cursorRing = document.getElementById('cursor-ring');
+  var ringX = 0, ringY = 0, mx = 0, my = 0;
+
+  if(window.matchMedia('(min-width: 861px)').matches){
+    window.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      cursorDot.style.left = mx + 'px';
+      cursorDot.style.top = my + 'px';
+    });
+
+    function ringLoop(){
+      ringX += (mx - ringX) * 0.18;
+      ringY += (my - ringY) * 0.18;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(ringLoop);
+    }
+    ringLoop();
+
+    var hoverTargets = 'a, button, .chip, .proj-card, .tl-card, .contact-card, .sample-card, .float-card, .ripple-avatar';
+    document.addEventListener('mouseover', function(e){
+      if(e.target.closest(hoverTargets)) cursorRing.classList.add('active');
+    });
+    document.addEventListener('mouseout', function(e){
+      if(e.target.closest(hoverTargets)) cursorRing.classList.remove('active');
+    });
+  }
+
+  /* ============================= NAVBAR ============================= */
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 30) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = document.getElementById('nav-links');
+  navToggle.addEventListener('click', function(){
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // active link highlighting
+  var navAnchorLinks = document.querySelectorAll('.nav-link');
+  var sections = document.querySelectorAll('section[id], header[id]');
+  function setActiveLink(){
+    var current = '';
+    sections.forEach(function(sec){
+      var rect = sec.getBoundingClientRect();
+      if(rect.top <= 120 && rect.bottom >= 120) current = sec.id;
+    });
+    navAnchorLinks.forEach(function(link){
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', setActiveLink);
+  setActiveLink();
+
+  /* ============================= SCROLL REVEAL ============================= */
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el){ revealObserver.observe(el); });
+
+  /* ============================= SKILL BARS (IntersectionObserver) ============================= */
+  var skillGroups = document.querySelectorAll('.skill-bar-group');
+  var skillObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var level = entry.target.getAttribute('data-level');
+        var fill = entry.target.querySelector('.skill-bar-fill');
+        requestAnimationFrame(function(){
+          fill.style.width = level + '%';
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  skillGroups.forEach(function(el){ skillObserver.observe(el); });
+
+  /* ============================= 3D FLOAT CARD TILT ============================= */
+  var floatCard = document.getElementById('float-card');
+  var cardStage = document.querySelector('.card-stage');
+  if(floatCard && window.matchMedia('(min-width: 861px)').matches){
+    cardStage.addEventListener('mousemove', function(e){
+      var rect = floatCard.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = (e.clientX - cx) / (rect.width / 2);
+      var dy = (e.clientY - cy) / (rect.height / 2);
+      floatCard.style.transform = 'rotateY(' + (dx * 10 - 8) + 'deg) rotateX(' + (-dy * 10 + 6) + 'deg)';
+    });
+    cardStage.addEventListener('mouseleave', function(){
+      floatCard.style.transform = '';
+    });
+  }
+
+  /* ============================= YEAR ============================= */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+})();
+</script>
+</body>
+</html>
+
